@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mx.japs.portal</groupId>
+  <artifactId>clientejs</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>clientejs Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+		<angularjs.version>1.4.3</angularjs.version>
+		<jquery.version>2.1.4</jquery.version>
+		<bootstrap.version>3.3.5</bootstrap.version>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>angularjs</artifactId>
+			<version>${angularjs.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-route</artifactId>
+			<version>${angularjs.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-resource</artifactId>
+			<version>${angularjs.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>${jquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>${bootstrap.version}</version>
+		</dependency>
+  </dependencies>
+  <build>
+    <finalName>clientejs</finalName>
+    <plugins>
+    	<plugin>
+			<groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+            	<url>http://localhost:8080/manager/text</url>
+                <server>TomcatServer7</server>
+                <path>/clientejs</path>
+                <update>true</update>
+			</configuration>
+		</plugin>
+	</plugins>
+  </build>
+</project>

@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Parametro detalle</h1>
+
+    <form novalidate="novalidate" class="form-horizontal">
+    	<div class="control-group">
+            <label class="control-label" for="inputFirstName">Grupo:</label>
+
+            <div class="controls">
+            	{{ parametro.grupo }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputFirstName">Nombre:</label>
+
+            <div class="controls">
+            	{{ parametro.nombre }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLastName">Descripcion:</label>
+
+            <div class="controls">
+            	{{ parametro.descripcion }}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <a ng-click="cancel()" class="btn btn-small">Cancelar</a>
+                <a ng-click="updateForm(parametro.id)" class="btn btn-small btn-primary">Editar</a>
+                <a ng-click="delete(parametro.id)" class="btn btn-small btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </form>
+</div>

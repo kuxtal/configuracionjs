@@ -1,0 +1,27 @@
+<div class="container">
+    <h1>Portal detalle</h1>
+
+    <form novalidate="novalidate" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="inputFirstName">Nombre:</label>
+
+            <div class="controls">
+            	{{ modulo.nombre }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLastName">Descripcion:</label>
+
+            <div class="controls">
+            	{{ modulo.descripcion }}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <a ng-click="cancel()" class="btn btn-small">Cancelar</a>
+                <a ng-click="updateForm(modulo.id)" class="btn btn-small btn-primary">Editar</a>
+                <a ng-click="delete(modulo.id)" class="btn btn-small btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </form>
+</div>
