@@ -58,7 +58,7 @@
             <configuration>
             	<url>http://localhost:8080/manager/text</url>
                 <server>TomcatServer7</server>
-                <path>/clientejs</path>
+                <path>/configuracionjs</path>
                 <update>true</update>
 			</configuration>
 		</plugin>
