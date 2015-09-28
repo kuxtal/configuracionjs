@@ -19,9 +19,9 @@ app.controller('inicio_ctrl', function ($scope) {
 	$scope.nombre = "Javier";
 });
 
-app.controller('menu_ctrl', function ($scope,  MenuFactory, PortalesFactory, ServiciosGlobales, $location) {
+app.controller('menu_ctrl', function ($scope,  MenuFactory, PortalService, ServiciosGlobales, $location) {
 	$scope.portal = false;
-	$scope.portales = PortalesFactory.query();
+	$scope.portales = PortalService.query();
 	
 	$scope.portalSeleccionado = function() {
 		return $scope.portal;

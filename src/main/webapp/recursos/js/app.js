@@ -1,5 +1,6 @@
 'use strict';
 
+// Comentario
 angular.module('appConfiguracion', ['ngRoute', 'app.services', 'app.controllers', 'app.directives', 'app.filters']).
     config(function ($routeProvider, $httpProvider, $locationProvider) {
     	$routeProvider.when('/inicio', {templateUrl: 'inicio.html', controller: 'inicio_ctrl'});

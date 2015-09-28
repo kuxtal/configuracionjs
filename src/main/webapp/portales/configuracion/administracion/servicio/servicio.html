@@ -13,10 +13,10 @@
 		 		<div class="modal-body">
 		 			<form novalidate="novalidate" class="form-horizontal" role="form">
 		 				<div class="form-group">
-				            <label class="col-sm-2 control-label" for="inputFirstName">Nombre:</label>
+				            <label class="col-sm-2 control-label" for="inputNombre">Nombre:</label>
 				
 				            <div class="col-sm-10" ng-show="modoEditable">
-				            	<input type="text" id="inputNombre" ng-model="objeto.nombre" placeholder="Nombre"/>
+				            	<input type="text" data-ng-model="registro.nombre" class="form-control" id="inputNombre" placeholder="Nombre" required title="Obligatorio" />
 				            </div>
 				            <div class="col-sm-10" ng-show="!modoEditable">
 				            	{{ registro.nombre }}
@@ -32,8 +32,8 @@
 				            	{{ registro.descripcion }}
 				            </div>
 				        </div>
-				        <div class="control-group">
-            				<label class="control-label" for="inputURL">URL:</label>
+				        <div class="form-group">
+            				<label class="col-sm-2 control-label" for="inputURL">URL:</label>
 
 				            <div class="col-sm-10" ng-show="modoEditable">
 				            	<input type="text" data-ng-model="registro.url" class="form-control" id="inputURL" placeholder="URL" required title="Obligatorio" />

@@ -37,7 +37,6 @@ app.controller('servicio_ctrl',
 		
 		$scope.updateForm = function (objeto) {
         	$scope.modoEditable	= true;
-        	$scope.portales 	= PortalService.query();
 	    	
 	    	ServiciosService.get({id : objeto.id}, function(result) {
                 $scope.registro = result;
