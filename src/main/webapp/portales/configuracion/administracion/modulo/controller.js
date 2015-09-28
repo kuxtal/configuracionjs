@@ -1,90 +1,94 @@
 'use strict';
+ 
+app.controller('modulo_ctrl', 
+	function ($scope, ModuloService) {
+		$scope.tituloBase	= 'Modulos';
+		$scope.tituloSingular= 'Modulo';
+		$scope.lista 		= [];
+		$scope.registro 	= null;
+		
+		$scope.modoEditable	= false;
+		$scope.tituloModal	= '';
+		
+		$scope.loadAll = function() {
+			ModuloService.query(function(result) {
+               $scope.lista = result;
+            });
+        };
 
-app.controller('modulo_list_ctrl', 
-	function ($scope, ModulosFactory, ModuloFactory, $location) {
-		$scope.urlBase = '/modulo';
-		$scope.modulos = ModulosFactory.query();
+		$scope.createForm = function () {
+        	$scope.registro 		= null;
+        	$scope.modoEditable	= false;
+
+        	$scope.tituloModal = 'Alta ' + $scope.tituloSingular;
+            $("#modalUpdateForm").modal('show');
+        };
 	
-		// callback for ng-click 'editUser':
-    	$scope.show = function (portalId) {
-    		$location.path($scope.urlBase + '/' + portalId);
+    	$scope.showForm = function (objeto) {
+    		$scope.modoEditable	= false;
+
+    		ModuloService.get({id : objeto.id}, function(result) {
+                $scope.registro = result;
+                
+                $scope.tituloModal = 'Detalle ' + $scope.tituloSingular;
+            	$("#modalShowForm").modal('show');
+            });
     	};
     	
-        // callback for ng-click 'editUser':
-        $scope.updateForm = function (portalId) {
-        	$location.path($scope.urlBase + '/form/' + portalId);
+        $scope.updateForm = function (objeto) {
+        	$scope.modoEditable	= true;
+        	
+        	if($("#modalShowForm").is(':visible')){
+        		$("#modalShowForm").modal('hide');
+        	}
+        	
+        	ModuloService.get({id : objeto.id}, function(result) {
+                $scope.registro = result;
+                
+                $scope.tituloModal = 'Editar ' + $scope.tituloSingular;
+            	$("#modalUpdateForm").modal('show');
+            });
         };
-    	
-        // callback for ng-click 'createUser':
-        $scope.createForm = function () {
-        	$location.path($scope.urlBase + '/create/form');
+        
+        $scope.save = function () {
+            if ($scope.registro.id != null) {
+            	ModuloService.update($scope.registro, onSaveFinished);
+            } else {
+            	ModuloService.save($scope.registro, onSaveFinished);
+            }
         };
 	
-        // callback for ng-click 'deleteUser':
-        $scope.delete = function (portalId) {
-        	ModuloFactory.delete({ id: portalId });
-        	$scope.modulos = ModulosFactory.query();
-        }; 
-    });
+        $scope.delete = function (objeto) {
+        	var registroActual = $scope.registro;
+        	
+        	ModuloService.delete({id: registroActual.id},
+        			function () {
+                        $scope.loadAll();
+                        $('#confirmModal').modal('hide');
+                        $scope.clear();
+                    });
+        };
+        
+        $scope.showconfirm = function (objeto) {
+        	ModuloService.get({id: objeto.id}, function(result) {
+                $scope.registro = result;
+                $("#confirmModal").modal('show');
+            });
+        };
+        
+        $scope.refresh = function () {
+            $scope.loadAll();
+            $scope.clear();
+        };
 
-app.controller('modulo_show_ctrl', function ($scope,  $routeParams, ModuloFactory, $location) {
-	$scope.urlBase = '/modulo';
-	$scope.modulo = ModuloFactory.show({id: $routeParams.id});
-
-    // callback for ng-click 'editUser':
-    $scope.updateForm = function (portalId) {
-        $location.path($scope.urlBase + '/form/' + portalId);
-    };
-    
-    // callback for ng-click 'deleteUser':
-    $scope.delete = function (portalId) {
-    	ModuloFactory.delete({ id: portalId });
-    	$location.path($scope.urlBase);
-    }; 
-    
-    // callback for ng-click 'cancel':
-    $scope.cancel = function () {
-        $location.path($scope.urlBase);
-    };
-
-});
-
-
-app.controller('modulo_updateForm_ctrl', function ($scope,  $routeParams, ModuloFactory, $location) {
-	$scope.urlBase = '/modulo';
-	$scope.modulo = ModuloFactory.show({id: $routeParams.id});
-
-    // callback for ng-click 'updateUser':
-    $scope.update = function () {
-    	ModuloFactory.update($scope.portal);
-        $location.path($scope.urlBase);
-    };
-
-    // callback for ng-click 'deleteUser':
-    $scope.delete = function (userId) {
-    	ModuloFactory.delete({ id: userId });
-        $scope.portales = PortalesFactory.query();
-    }; 
-    
-    // callback for ng-click 'cancel':
-    $scope.cancel = function () {
-        $location.path($scope.urlBase);
-    };
-
-});
-
-
-app.controller('modulo_createForm_ctrl', function ($scope,  ModulosFactory, $location) {
-	$scope.urlBase = '/modulo';
-    // callback for ng-click 'createNewUser':
-    $scope.create = function () {
-    	ModulosFactory.create($scope.portal);
-    	$location.path($scope.urlBase);
-    }
-    
-    // callback for ng-click 'cancel':
-    $scope.cancel = function () {
-        $location.path($scope.urlBase);
-    };
-
+        $scope.clear = function () {
+            $scope.registro = {nombre: null, descripcion: null, id: null};
+        };
+        
+        var onSaveFinished = function (result) {
+        	$scope.loadAll();
+        	$("#modalUpdateForm").modal('hide');
+        };
+        
+        $scope.loadAll();
 });

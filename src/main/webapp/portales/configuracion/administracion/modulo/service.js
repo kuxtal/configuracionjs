@@ -1,16 +1,17 @@
 'use strict';
 
-services.factory('ModulosFactory', function ($resource, ServiciosGlobales) {
-    return $resource(ServiciosGlobales.API_URL + '/moduloes', {}, {
-        query: { method: 'GET', isArray: true, cache: false },
-        create: { method: 'POST' }
-    })
-});
-
-services.factory('ModuloFactory', function ($resource, ServiciosGlobales) {
-    return $resource(ServiciosGlobales.API_URL + '/moduloes/:id', {}, {
-        show: { method: 'GET' },
-        update: { method: 'PUT', params: {id: '@id'} },
-        delete: { method: 'DELETE', params: {id: '@id'} }
-    })
+services.factory('ModuloService', function ($resource, ServiciosGlobales) {
+	var serviceurl = ServiciosGlobales.API_URL + '/moduloes';
+	
+	return $resource(serviceurl + '/:id', { id: '@id' }, {
+        'query': { method: 'GET', isArray: true},
+        'get': {
+            method: 'GET',
+            transformResponse: function (data) {
+                data = angular.fromJson(data);
+                return data;
+            }
+        },
+        'update': { method:'PUT' }
+    });
 });

@@ -1,16 +1,17 @@
 'use strict';
 
-services.factory('PortalesFactory', function ($resource, ServiciosGlobales) {
-    return $resource(ServiciosGlobales.API_URL + '/portals', {}, {
-        query: { method: 'GET', isArray: true, cache: false },
-        create: { method: 'POST' }
-    })
-});
-
-services.factory('PortalFactory', function ($resource, ServiciosGlobales) {
-    return $resource(ServiciosGlobales.API_URL + '/portals/:id', {}, {
-        show: { method: 'GET' },
-        update: { method: 'PUT', params: {id: '@id'} },
-        delete: { method: 'DELETE', params: {id: '@id'} }
-    })
+services.factory('PortalService', function ($resource, ServiciosGlobales) {
+	var serviceurl = ServiciosGlobales.API_URL + '/portals';
+	
+	return $resource(serviceurl + '/:id', { id: '@id' }, {
+        'query': { method: 'GET', isArray: true},
+        'get': {
+            method: 'GET',
+            transformResponse: function (data) {
+                data = angular.fromJson(data);
+                return data;
+            }
+        },
+        'update': { method:'PUT' }
+    });
 });

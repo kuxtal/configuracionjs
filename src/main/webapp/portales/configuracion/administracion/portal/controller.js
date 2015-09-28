@@ -1,97 +1,90 @@
 'use strict';
 
-app.controller('portal_list_ctrl', function ($scope, ServiciosGlobales, PortalesFactory, PortalFactory, $location) {
-		$scope.urlBase = ServiciosGlobales.PORTAL_URL + '/administracion/portal';
-		$scope.portales = PortalesFactory.query();
+app.controller('portal_ctrl', 
+	function ($scope, PortalService) {
+		$scope.tituloBase	= 'Portales';
+		$scope.tituloSingular= 'Portal';
+		$scope.lista 		= [];
+		$scope.registro 	= null;
+		
+		$scope.modoEditable	= false;
+		$scope.tituloModal	= '';
+		
+		$scope.loadAll = function() {
+			PortalService.query(function(result) {
+               $scope.lista = result;
+            });
+        };
+
+		$scope.createForm = function () {
+        	$scope.registro 	= null;
+        	$scope.modoEditable	= true;
+
+        	$scope.tituloModal = 'Alta ' + $scope.tituloSingular;
+            $("#modalForm").modal('show');
+        };
 	
-		// callback for ng-click 'editUser':
-    	$scope.show = function (portalId) {
-    		$location.path($scope.urlBase + '/' +portalId);
+    	$scope.showForm = function (objeto) {
+    		$scope.modoEditable	= false;
+
+    		PortalService.get({id : objeto.id}, function(result) {
+                $scope.registro = result;
+                
+                $scope.tituloModal = 'Detalle ' + $scope.tituloSingular;
+            	$("#modalForm").modal('show');
+            });
     	};
     	
-        // callback for ng-click 'editUser':
-        $scope.updateForm = function (portalId) {
-        	$location.path($scope.urlBase + '/form/' + portalId);
+        $scope.updateForm = function (objeto) {
+        	$scope.modoEditable	= true;
+
+        	PortalService.get({id : objeto.id}, function(result) {
+                $scope.registro = result;
+                
+                $scope.tituloModal = 'Editar Portal';
+            	$("#modalForm").modal('show');
+            });
         };
-    	
-        // callback for ng-click 'createUser':
-        $scope.createForm = function () {
-        	$location.path($scope.urlBase + '/create/form');
+        
+        $scope.save = function () {
+            if ($scope.registro.id != null) {
+            	PortalService.update($scope.registro, onSaveFinished);
+            } else {
+            	PortalService.save($scope.registro, onSaveFinished);
+            }
         };
 	
-        // callback for ng-click 'deleteUser':
-        $scope.delete = function (portalId) {
-        	PortalFactory.delete({ id: portalId });
-        	$scope.portales = PortalesFactory.query();
-        }; 
-    });
+        $scope.delete = function (objeto) {
+        	var registroActual = $scope.registro;
+        	
+        	PortalService.delete({id: registroActual.id},
+        			function () {
+                        $scope.loadAll();
+                        $('#confirmModal').modal('hide');
+                        $scope.clear();
+                    });
+        };
+        
+        $scope.showconfirm = function (objeto) {
+        	PortalService.get({id: objeto.id}, function(result) {
+                $scope.registro = result;
+                $("#confirmModal").modal('show');
+            });
+        };
+        
+        $scope.refresh = function () {
+            $scope.loadAll();
+            $scope.clear();
+        };
 
-app.controller('portal_show_ctrl', function ($scope,  $routeParams, ServiciosGlobales, PortalFactory, ParametrosFactory, ModulosFactory, $location) {
-	$scope.urlBase = ServiciosGlobales.PORTAL_URL + '/administracion/portal';
-	$scope.portal = PortalFactory.show({id: $routeParams.id});
-	$scope.parametros = ParametrosFactory.query();
-	$scope.modulos = ModulosFactory.query();
-
-    // callback for ng-click 'editUser':
-    $scope.updateForm = function (portalId) {
-        $location.path($scope.urlBase + '/form/' + portalId);
-    };
-    
-    // callback for ng-click 'deleteUser':
-    $scope.delete = function (portalId) {
-    	PortalFactory.delete({ id: portalId });
-    	$location.path($scope.urlBase);
-    }; 
-    
-    // callback for ng-click 'cancel':
-    $scope.cancel = function () {
-        $location.path($scope.urlBase);
-    };
-    
-    $scope.createFormParametro = function () {
-    	$location.path(ServiciosGlobales.PORTAL_URL + '/parametro/create/form');
-    };
-    
-    $scope.createFormModulo = function () {
-    	$location.path(ServiciosGlobales.PORTAL_URL + '/modulo/create/form');
-    };
-});
-
-
-app.controller('portal_updateForm_ctrl', function ($scope,  $routeParams, ServiciosGlobales, PortalFactory, $location) {
-	$scope.urlBase = ServiciosGlobales.PORTAL_URL + '/administracion/portal';
-	$scope.portal = PortalFactory.show({id: $routeParams.id});
-
-    // callback for ng-click 'updateUser':
-    $scope.update = function () {
-    	PortalFactory.update($scope.portal);
-        $location.path($scope.urlBase);
-    };
-
-    // callback for ng-click 'deleteUser':
-    $scope.delete = function (userId) {
-    	PortalFactory.delete({ id: userId });
-        $scope.portales = PortalesFactory.query();
-    }; 
-    
-    // callback for ng-click 'cancel':
-    $scope.cancel = function () {
-        $location.path($scope.urlBase);
-    };
-});
-
-
-app.controller('portal_createForm_ctrl', function ($scope, ServiciosGlobales, PortalesFactory, $location) {
-	$scope.urlBase = ServiciosGlobales.PORTAL_URL + '/administracion/portal';
-    // callback for ng-click 'createNewUser':
-    $scope.create = function () {
-    	PortalesFactory.create($scope.portal);
-    	$location.path($scope.urlBase);
-    }
-    
-    // callback for ng-click 'cancel':
-    $scope.cancel = function () {
-        $location.path($scope.urlBase);
-    };
-
+        $scope.clear = function () {
+            $scope.registro = {nombre: null, descripcion: null, id: null};
+        };
+        
+        var onSaveFinished = function (result) {
+        	$scope.loadAll();
+        	$("#modalForm").modal('hide');
+        };
+        
+        $scope.loadAll();
 });

@@ -1,0 +1,123 @@
+<div class="container">
+	<div ng-show="error" class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<p>{{ error }}</p>
+	</div>
+
+	<div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+	 		<div class="modal-content">
+		 		<div class="modal-header">
+		 			<h4 class="modal-title" id="myModalLabel">{{ tituloModal }}</h4>
+		 		</div>
+		 		<div class="modal-body">
+		 			<form novalidate="novalidate" class="form-horizontal" role="form">
+		 				<div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputFirstName">Grupo:</label>
+				
+				            <div class="col-sm-10" ng-show="modoEditable">
+				            	<input type="text" data-ng-model="registro.grupo" class="form-control" id="title" placeholder="Grupo" required title="Obligatorio" />
+				            </div>
+				            <div class="col-sm-10" ng-show="!modoEditable">
+				            	{{ registro.grupo }}
+				            </div>
+				        </div>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputFirstName">Nombre:</label>
+				
+				            <div class="col-sm-10" ng-show="modoEditable">
+				            	<input type="text" data-ng-model="registro.nombre" class="form-control" id="title" placeholder="Nombre" required title="Obligatorio" />
+				            </div>
+				            <div class="col-sm-10" ng-show="!modoEditable">
+				            	{{ registro.nombre }}
+				            </div>
+				        </div>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputValor">Valor:</label>
+				
+				            <div class="col-sm-10" ng-show="modoEditable">
+				            	<input type="text" data-ng-model="registro.valor" class="form-control" id="inputValor" placeholder="Valor" required title="Obligatorio" />
+				            </div>
+				            <div class="col-sm-10" ng-show="!modoEditable">
+				            	{{ registro.valor }}
+				            </div>
+				        </div>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputLastName">Descripcion:</label>
+				
+				            <div class="col-sm-10" ng-show="modoEditable">
+				            	<input type="text" data-ng-model="registro.descripcion" class="form-control" id="title" placeholder="Descripcion" required title="Obligatorio" />
+				            </div>
+				            <div class="col-sm-10" ng-show="!modoEditable">
+				            	{{ registro.descripcion }}
+				            </div>
+				        </div>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputPortal">Portal Asignado:</label>
+				
+				            <div class="col-sm-10" ng-show="modoEditable">
+				            	<select id="portalSelect" name="portalSelect" ng-model="registro.portal.id" ng-options="portal.id as portal.nombre for portal in portales">
+    							</select>
+				            </div>
+				            <div class="col-sm-10" ng-show="!modoEditable">
+				            	{{ registro.portal.nombre }}
+				            </div>
+				        </div>
+				        <div class="form-group">
+				            <div class="col-sm-offset-2 col-sm-10">
+				                <input value="Cancelar" data-ng-click="clear()" type="button" class="btn btn-small" data-dismiss="modal"/>
+			                	<input value="Guardar" data-ng-click="save()" type="submit" class="btn btn-small btn-primary" ng-show="modoEditable"/>
+			                	<input value="Editar" data-ng-click="updateForm({id:registro.id})" type="button" class="btn btn-small btn-primary" ng-show="!modoEditable"/>
+				            </div>
+				        </div>
+				    </form>
+		 		</div>
+		 	</div>
+		 </div>
+	</div>
+	
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+					<h4 class="modal-title" id="myModalLabel">Confirmar Accion</h4>
+				</div>
+				<div class="modal-body">
+					Est&aacute;s seguro que quieres eliminar el registro?
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-ng-click="delete()">Ok</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+			</div>
+		</div>
+	</div>
+
+	<h1>{{ tituloBase }}</h1>
+    <table class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <th style="min-width: 80px;">Grupo</th>
+            <th style="min-width: 80px;">Nombre</th>
+            <th style="min-width: 80px;">Valor</th>
+            <th style="min-width: 80px;">Descripcion</th>
+            <th style="width:20px;">&nbsp;</th>
+            <th style="width:20px;">&nbsp;</th>
+            <th style="width:20px;">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="objeto in lista">
+            <td>{{ objeto.grupo }}</td>
+            <td>{{ objeto.nombre }}</td>
+            <td>{{ objeto.valor }}</td>
+            <td>{{ objeto.descripcion }}</td>
+            <td><a ng-click="showForm({id:objeto.id})" class="btn btn-small btn-primary">Mostrar</a></td>
+            <td><a ng-click="updateForm({id:objeto.id})" class="btn btn-small btn-primary">Editar</a>
+            <td><a ng-click="showconfirm({id:objeto.id})" class="btn btn-small btn-danger">Eliminar</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a ng-click="createForm()" class="btn btn-small btn-primary">Nuevo</a>
+</div>

@@ -1,16 +1,17 @@
 'use strict';
 
-services.factory('ParametrosFactory', function ($resource, ServiciosGlobales) {
-    return $resource(ServiciosGlobales.API_URL + '/parametroes', {}, {
-        query: { method: 'GET', isArray: true, cache: false },
-        create: { method: 'POST' }
-    })
-});
-
-services.factory('ParametroFactory', function ($resource, ServiciosGlobales) {
-    return $resource(ServiciosGlobales.API_URL + '/parametroes/:id', {}, {
-        show: { method: 'GET' },
-        update: { method: 'PUT', params: {id: '@id'} },
-        delete: { method: 'DELETE', params: {id: '@id'} }
-    })
+services.factory('ParametroService', function ($resource, ServiciosGlobales) {
+	var serviceurl = ServiciosGlobales.API_URL + '/parametroes';
+	
+	return $resource(serviceurl + '/:id', { id: '@id' }, {
+        'query': { method: 'GET', isArray: true},
+        'get': {
+            method: 'GET',
+            transformResponse: function (data) {
+                data = angular.fromJson(data);
+                return data;
+            }
+        },
+        'update': { method:'PUT' }
+    });
 });

@@ -1,75 +1,95 @@
 'use strict';
 
-app.controller('parametros_ctrl', 
-	function ($scope, ParametrosFactory, ParametroFactory, $location, $timeout) {
-		$scope.urlBase = '/configuracion/administracion/parametro'; 
-		$scope.parametros = ParametrosFactory.query();
-	
-		// callback for ng-click 'show':
-    	$scope.show = function (idObjeto) {
-    		$location.path($scope.urlBase + '/' + idObjeto);
-    	};
-    	
-        // callback for ng-click 'updateForm':
-        $scope.updateForm = function (idObjeto) {
-        	$location.path($scope.urlBase + '/form/' + idObjeto);
-        };
-    	
-        // callback for ng-click 'createForm':
-        $scope.createForm = function () {
-        	$location.path($scope.urlBase + '/create/form');
-        };
-	
-        // callback for ng-click 'delete':
-        $scope.delete = function (idObjeto) {
-        	ParametroFactory.delete({ id: idObjeto }, function(data) {
-        		$scope.parametros = ParametrosFactory.query();
-        	});
-        }; 
-    });
-
 app.controller('parametro_ctrl', 
-	function ($scope,  $routeParams, ParametrosFactory, ParametroFactory, $location) {
-		$scope.urlBase = '/configuracion/administracion/parametro';
-		$scope.parametro = ParametroFactory.show({id: $routeParams.id});
+	function ($scope, ParametroService, PortalService) {
+		$scope.tituloBase	= 'Parametros';
+		$scope.tituloSingular= 'Parametro';
+		$scope.lista		= [];
+		$scope.registro		= null;
+		
+		$scope.modoEditable	= false;
+		$scope.tituloModal	= '';
+		
+		// Adicionales
+		$scope.portalParametro	= null;
+		$scope.portales			= [];
+		
+		$scope.loadAll = function() {
+			ParametroService.query(function(result) {
+               $scope.lista = result;
+            });
+        };
+		
+		$scope.createForm = function () {
+			$scope.clear();
+	    	$scope.modoEditable	= true;
 	
-	    // callback for ng-click 'updateForm':
-	    $scope.updateForm = function (idObjeto) {
-	        $location.path($scope.urlBase + '/form/' + idObjeto);
+	        $scope.tituloModal = 'Alta ' + $scope.tituloSingular;
+	        $("#modalForm").modal('show');
+	    };
+	
+		$scope.showForm = function (objeto) {
+			$scope.modoEditable	= false;
+			
+			ParametroService.get({id : objeto.id}, function(result) {
+                $scope.registro = result;
+                
+                $scope.tituloModal = 'Detalle ' + $scope.tituloSingular;
+                $("#modalForm").modal('show');
+            });
+		};
+		
+		$scope.updateForm = function (objeto) {
+        	$scope.modoEditable	= true;
+        	$scope.portales 	= PortalService.query();
+	    	
+	    	ParametroService.get({id : objeto.id}, function(result) {
+                $scope.registro = result;
+                
+                $scope.tituloModal = 'Editar ' + $scope.tituloSingular;
+                $("#modalForm").modal('show');
+            });
 	    };
 	    
-	    // callback for ng-click 'update':
-	    $scope.update = function () {
-	    	ParametroFactory.update($scope.portal);
-	        $location.path($scope.urlBase);
+	    $scope.save = function () {
+	    	if ($scope.registro.id != null) {
+            	ParametroService.update($scope.registro, onSaveFinished);
+            } else {
+            	ParametroService.save($scope.registro, onSaveFinished);
+            }
 	    };
+	
+	    $scope.delete = function (objeto) {
+        	var registroActual = $scope.registro;
+        	
+        	ParametroService.delete({id: registroActual.id},
+        			function () {
+                        $scope.loadAll();
+                        $('#confirmModal').modal('hide');
+                        $scope.clear();
+                    });
+        };
 	    
-	    // callback for ng-click 'delete':
-	    $scope.delete = function (idObjeto) {
-	    	ModuloFactory.delete({ id: idObjeto });
-	    	$location.path($scope.urlBase);
-	    }; 
-	    
-	    // callback for ng-click 'cancel':
-	    $scope.cancel = function () {
-	        $location.path($scope.urlBase);
-	    };
-	});
-
-
-app.controller('parametro_createForm_ctrl', 
-	function ($scope,  ParametrosFactory, $location) {
-		$scope.urlBase = '/configuracion/administracion/parametro';
-	    
-		// callback for ng-click 'create':
-	    $scope.create = function () {
-	    	ParametrosFactory.create($scope.parametro, function(data) {
-	    		$location.path($scope.urlBase);
-        	});
-	    }
-	    
-	    // callback for ng-click 'cancel':
-	    $scope.cancel = function () {
-	        $location.path($scope.urlBase);
-	    };
-	});
+        $scope.showconfirm = function (objeto) {
+        	ParametroService.get({id: objeto.id}, function(result) {
+                $scope.registro = result;
+                $("#confirmModal").modal('show');
+            });
+        };
+        
+        $scope.refresh = function () {
+            $scope.loadAll();
+            $scope.clear();
+        };
+        
+        $scope.clear = function () {
+            $scope.registro = {grupo: null, nombre: null, valor: null, descripcion: null, id: null};
+        };
+        
+        var onSaveFinished = function (result) {
+        	$scope.loadAll();
+        	$("#modalForm").modal('hide');
+        };
+        
+        $scope.loadAll();
+});
