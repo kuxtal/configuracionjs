@@ -31,10 +31,3 @@ services.factory('ServiciosGlobales', function() {
 		PORTAL_URL : 'http://applocal\\:8080/configuracion'
 	};
 });
-
-
-services.factory('Servicioautenticacion', function ($resource, ServiciosGlobales) {
-    return $resource(ServiciosGlobales.API_URL + '/resources/j_spring_security_check?j_username=:j_username&j_password=:j_password&submit=Login', {}, {
-        login: { method: 'POST', cache: false, params: {j_username: '@j_username', j_password : '@j_password'} }
-    })
-});
