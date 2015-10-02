@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('portal_ctrl', 
-	function ($scope, PortalService) {
+	function ($scope, PortalService, ParametroService) {
 		$scope.tituloBase	= 'Portales';
 		$scope.tituloSingular= 'Portal';
 		$scope.lista 		= [];
@@ -85,6 +85,11 @@ app.controller('portal_ctrl',
         	$scope.loadAll();
         	$("#modalForm").modal('hide');
         };
+        
+        $scope.showParametros = function(){
+        	$scope.listaParametros = ParametroService.query();
+        	$("#modalParametrosForm").modal('show');
+        }
         
         $scope.loadAll();
 });

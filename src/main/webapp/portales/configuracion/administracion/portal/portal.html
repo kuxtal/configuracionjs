@@ -47,6 +47,8 @@
 				                <input value="Cancelar" data-ng-click="clear()" type="button" class="btn btn-small" data-dismiss="modal"/>
 			                	<input value="Guardar" data-ng-click="save()" type="submit" class="btn btn-small btn-primary" ng-show="modoEditable"/>
 			                	<input value="Editar" data-ng-click="updateForm({id:registro.id})" type="button" class="btn btn-small btn-primary" ng-show="!modoEditable"/>
+			                	
+			                	<input value="Ver Parametros" data-ng-click="showParametros()" type="button" class="btn btn-info btn-sm" ng-show="!modoEditable"/>
 				            </div>
 				        </div>
 				    </form>
@@ -88,11 +90,14 @@
         <tr ng-repeat="objeto in lista">
             <td>{{ objeto.nombre }}</td>
             <td>{{ objeto.descripcion }}</td>
-            <td><a ng-click="showForm({id:objeto.id})" class="btn btn-small btn-primary">Mostrar</a></td>
-            <td><a ng-click="updateForm({id:objeto.id})" class="btn btn-small btn-primary">Editar</a>
-            <td><a ng-click="showconfirm({id:objeto.id})" class="btn btn-small btn-danger">Eliminar</a></td>
+            <td><a ng-click="showForm({id:objeto.id})" class="btn btn-info btn-sm">Mostrar</a></td>
+            <td><a ng-click="updateForm({id:objeto.id})" class="btn btn-primary btn-sm">Editar</a></td>
+            <td><a ng-click="showconfirm({id:objeto.id})" class="btn btn-danger btn-sm">Eliminar</a></td>
         </tr>
         </tbody>
     </table>
     <a ng-click="createForm()" class="btn btn-small btn-primary">Nuevo</a>
+    
+    <div ng-include src="'portales/configuracion/administracion/portal/modalParametrosForm.html'">
+    </div>
 </div>

@@ -26,7 +26,7 @@ services.factory('MenuFactory', function ($resource, ServiciosGlobales) {
 
 services.factory('ServiciosGlobales', function() {
 	return {
-		API_URL : 'http://applocal\\:8080/configuracion',
+		API_URL : 'http://applocal\\:8080/pruebatoken-0.0.1-SNAPSHOT/api',
 		SSO_URL : 'http://applocal\\:8080/configuracion',
 		PORTAL_URL : 'http://applocal\\:8080/configuracion'
 	};

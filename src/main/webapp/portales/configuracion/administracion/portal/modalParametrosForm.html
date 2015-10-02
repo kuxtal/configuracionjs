@@ -1,0 +1,48 @@
+<div class="modal fade" id="modalParametrosForm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+ 		<div class="modal-content">
+	 		<div class="modal-header">
+	 			<h4 class="modal-title" id="myModalLabel">{{ tituloModal }}</h4>
+	 		</div>
+	 		<div class="modal-body">
+	 			<table class="table table-striped table-condensed">
+					<thead>
+				        <tr>
+				            <th style="min-width: 80px;">Grupo</th>
+				            <th style="min-width: 80px;">Nombre</th>
+				            <th style="min-width: 80px;">Valor</th>
+				            <th style="min-width: 80px;">Descripcion</th>
+				            <th style="width:20px;">&nbsp;</th>
+				            <th style="width:20px;">&nbsp;</th>
+				            <th style="width:20px;">&nbsp;</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr ng-repeat="parametro in listaParametros">
+				            <td>{{ parametro.grupo }}</td>
+				            <td>{{ parametro.nombre }}</td>
+				            <td>{{ parametro.valor }}</td>
+				            <td>{{ parametro.descripcion }}</td>
+				            <td><a ng-click="updateForm({id:parametro.id})" class="btn btn-small btn-primary">Editar</a></td>
+				            <td><a ng-click="showconfirm({id:parametro.id})" class="btn btn-small btn-danger">Eliminar</a></td>
+				        </tr>
+				    </tbody>
+				    <tfoot>
+				    	<tr>
+				    		<td colspan="6">
+				    			<a ng-click="createParametro()" class="btn btn-small btn-primary"><i class="glyphicon glyphicon-plus"></i></a>
+				    		</td>
+				    	</tr>
+				    </tfoot>
+				</table>
+	 		</div>
+	 		<div class="modal-footer">
+	 			<div class="control-group">
+		            <div class="controls">
+		                <input value="Cerrar" type="button" class="btn btn-small" data-dismiss="modal"/>
+		            </div>
+		        </div>
+	 		</div>
+	 	</div>
+	 </div>
+</div>
