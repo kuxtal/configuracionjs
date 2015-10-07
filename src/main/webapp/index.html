@@ -20,10 +20,10 @@
 					<a href="#{{ modulo.url }}">{{ modulo.texto }}</a>
 					<UL class="menu">
 						<LI ng-repeat="menu in modulo.menu">
-							<a href="#{{ modulo.url }}{{ menu.url }}">{{ menu.texto }}</a>
+							<a href="{{ menu.url }}">{{ menu.texto }}</a>
 							<UL>
 								<LI ng-repeat="subMenu in menu.subMenu">
-									<a href="#{{ modulo.url }}{{ subMenu.url }}">{{ subMenu.texto }}</a>
+									<a href="#{{ subMenu.url }}">{{ subMenu.texto }}</a>
 								</LI>
 							</UL>
 						</LI>
