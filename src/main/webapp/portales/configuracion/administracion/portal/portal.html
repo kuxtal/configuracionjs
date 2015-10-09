@@ -48,7 +48,8 @@
 			                	<input value="Guardar" data-ng-click="save()" type="submit" class="btn btn-small btn-primary" ng-show="modoEditable"/>
 			                	<input value="Editar" data-ng-click="updateForm({id:registro.id})" type="button" class="btn btn-small btn-primary" ng-show="!modoEditable"/>
 			                	
-			                	<input value="Ver Parametros" data-ng-click="showParametros()" type="button" class="btn btn-info btn-sm" ng-show="!modoEditable"/>
+			                	<input value="Parametros" data-ng-click="showParametros()" type="button" class="btn btn-info btn-sm" ng-show="!modoEditable"/>
+			                	<input value="Modulos" data-ng-click="showModulos()" type="button" class="btn btn-info btn-sm" ng-show="!modoEditable"/>
 				            </div>
 				        </div>
 				    </form>
@@ -99,5 +100,8 @@
     <a ng-click="createForm()" class="btn btn-small btn-primary">Nuevo</a>
     
     <div ng-include src="'portales/configuracion/administracion/portal/modalParametrosForm.html'">
+    </div>
+    
+    <div ng-include src="'portales/configuracion/administracion/portal/modalModulosForm.html'">
     </div>
 </div>

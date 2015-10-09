@@ -21,7 +21,7 @@ app.controller('modulo_ctrl',
         	$scope.modoEditable	= false;
 
         	$scope.tituloModal = 'Alta ' + $scope.tituloSingular;
-            $("#modalUpdateForm").modal('show');
+            $("#modalForm").modal('show');
         };
 	
     	$scope.showForm = function (objeto) {
@@ -31,22 +31,22 @@ app.controller('modulo_ctrl',
                 $scope.registro = result;
                 
                 $scope.tituloModal = 'Detalle ' + $scope.tituloSingular;
-            	$("#modalShowForm").modal('show');
+            	$("#modalForm").modal('show');
             });
     	};
     	
         $scope.updateForm = function (objeto) {
         	$scope.modoEditable	= true;
         	
-        	if($("#modalShowForm").is(':visible')){
-        		$("#modalShowForm").modal('hide');
+        	if($("#modalForm").is(':visible')){
+        		$("#modalForm").modal('hide');
         	}
         	
         	ModuloService.get({id : objeto.id}, function(result) {
                 $scope.registro = result;
                 
                 $scope.tituloModal = 'Editar ' + $scope.tituloSingular;
-            	$("#modalUpdateForm").modal('show');
+            	$("#modalForm").modal('show');
             });
         };
         
@@ -87,7 +87,7 @@ app.controller('modulo_ctrl',
         
         var onSaveFinished = function (result) {
         	$scope.loadAll();
-        	$("#modalUpdateForm").modal('hide');
+        	$("#modalForm").modal('hide');
         };
         
         $scope.loadAll();

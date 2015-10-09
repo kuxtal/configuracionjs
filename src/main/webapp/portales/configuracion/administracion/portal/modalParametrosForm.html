@@ -18,22 +18,21 @@
 				        </tr>
 				    </thead>
 				    <tbody>
+				    	<TR>
+				        	<td><input type="text" data-ng-model="nvoparametro.grupo" class="form-control" id="grupo" placeholder="Grupo" required title="Obligatorio" /></td>
+				            <td><input type="text" data-ng-model="nvoparametro.nombre" class="form-control" id="nombre" placeholder="Nombre" required title="Obligatorio" /></td>
+				            <td><input type="text" data-ng-model="nvoparametro.valor" class="form-control" id="valor" placeholder="Valor" required title="Obligatorio" /></td>
+				            <td><input type="text" data-ng-model="nvoparametro.descripcion" class="form-control" id="descripcion" placeholder="Descripcion" required title="Obligatorio" /></td>
+				            <td><a ng-click="agregarParametro()" class="btn btn-small btn-primary"><i class="glyphicon glyphicon-plus"></i></a></td>
+				        </TR>
 				        <tr ng-repeat="parametro in listaParametros">
 				            <td>{{ parametro.grupo }}</td>
 				            <td>{{ parametro.nombre }}</td>
 				            <td>{{ parametro.valor }}</td>
 				            <td>{{ parametro.descripcion }}</td>
-				            <td><a ng-click="updateForm({id:parametro.id})" class="btn btn-small btn-primary">Editar</a></td>
-				            <td><a ng-click="showconfirm({id:parametro.id})" class="btn btn-small btn-danger">Eliminar</a></td>
+				            <td><a ng-click="eliminarParametro({id:parametro.id})" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-minus"></i></a></td>
 				        </tr>
 				    </tbody>
-				    <tfoot>
-				    	<tr>
-				    		<td colspan="6">
-				    			<a ng-click="createParametro()" class="btn btn-small btn-primary"><i class="glyphicon glyphicon-plus"></i></a>
-				    		</td>
-				    	</tr>
-				    </tfoot>
 				</table>
 	 		</div>
 	 		<div class="modal-footer">

@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('portal_ctrl', 
-	function ($scope, PortalService, ParametroService) {
+	function ($scope, PortalService, ParametroService, ModuloService) {
 		$scope.tituloBase	= 'Portales';
 		$scope.tituloSingular= 'Portal';
 		$scope.lista 		= [];
@@ -9,6 +9,10 @@ app.controller('portal_ctrl',
 		
 		$scope.modoEditable	= false;
 		$scope.tituloModal	= '';
+		
+		// Adicionales
+		$scope.nvoparametro	= {grupo:null, nombre: null, descripcion: null, id: null};
+		$scope.nvoModulo	= {url:null, nombre: null, descripcion: null, id: null};
 		
 		$scope.loadAll = function() {
 			PortalService.query(function(result) {
@@ -87,9 +91,44 @@ app.controller('portal_ctrl',
         };
         
         $scope.showParametros = function(){
-        	$scope.listaParametros = ParametroService.query();
+        	$scope.listaParametros = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'parametros'});
         	$("#modalParametrosForm").modal('show');
         }
         
+        $scope.showModulos = function(){
+        	$scope.listaModulos = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'modulos'});
+        	$("#modalModulosForm").modal('show');
+        }
+        
         $scope.loadAll();
+        
+        $scope.agregarParametro = function(){
+        	$scope.nvoparametro.portal = $scope.registro;
+        	
+        	ParametroService.save($scope.nvoparametro, function(){
+        		$scope.nvoparametro	= {grupo:null, nombre: null, descripcion: null, id: null };
+        		$scope.listaParametros = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'parametros'});
+        	});
+        }
+        
+        $scope.eliminarParametro = function (objeto) {
+        	ParametroService.delete({id: objeto.id}, function () {
+        		$scope.listaParametros = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'parametros'});
+        	});
+        };
+        
+        $scope.agregarModulo = function(){
+        	$scope.nvoModulo.portal = $scope.registro;
+        	
+        	ModuloService.save($scope.nvoModulo, function(){
+        		$scope.nvoModulo	= {url:null, nombre: null, descripcion: null, id: null};
+        		$scope.listaModulos = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'modulos'});
+        	});
+        }
+        
+        $scope.eliminarModulo = function (objeto) {
+        	ModuloService.delete({id: objeto.id}, function () {
+        		$scope.listaModulos = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'modulos'});
+        	});
+        };
 });
