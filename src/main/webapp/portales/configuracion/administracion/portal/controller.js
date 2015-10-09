@@ -98,6 +98,7 @@ app.controller('portal_ctrl',
         $scope.showModulos = function(){
         	$scope.listaModulos = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'modulos'});
         	$("#modalModulosForm").modal('show');
+        	$("#listadoOpciones").hide();
         }
         
         $scope.loadAll();
@@ -131,4 +132,9 @@ app.controller('portal_ctrl',
         		$scope.listaModulos = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'modulos'});
         	});
         };
+        
+        
+        $scope.showMenuOpciones = function(){
+        	$("#listadoOpciones").show();
+        }
 });
