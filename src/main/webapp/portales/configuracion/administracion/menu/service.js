@@ -1,7 +1,7 @@
 'use strict';
 
-services.factory('ModuloService', function ($resource, ServiciosGlobales) {
-	var serviceurl = ServiciosGlobales.API_URL + '/moduloes';
+services.factory('MenuService', function ($resource, ServiciosGlobales) {
+	var serviceurl = ServiciosGlobales.API_URL + '/menuopcions';
 	
 	return $resource(serviceurl + '/:id/:adicional', {}, {
         'query': { method: 'GET', isArray: true},

@@ -14,7 +14,7 @@ angular.module('appConfiguracion', ['ngRoute', 'app.services', 'app.controllers'
         
         $routeProvider.when('/configuracion/administracion/parametro', {templateUrl: 'portales/configuracion/administracion/parametro/parametro.html', controller: 'parametro_ctrl'});
         
-        $routeProvider.when('/configuracion/administracion/servicio', {templateUrl: 'portales/configuracion/administracion/servicio/servicio.html', controller: 'servicio_ctrl'});
+        $routeProvider.when('/configuracion/administracion/menu', {templateUrl: 'portales/configuracion/administracion/menu/menu.html', controller: 'menu_ctrl'});
         
         $routeProvider.otherwise({redirectTo: '/inicio'});
         

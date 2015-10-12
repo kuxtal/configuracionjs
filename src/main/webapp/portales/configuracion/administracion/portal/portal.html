@@ -12,38 +12,38 @@
 		 		</div>
 		 		<div class="modal-body">
 		 			<form novalidate="novalidate" class="form-horizontal" role="form">
-				        <div class="control-group">
-				            <label class="control-label" for="inputNombre">Nombre:</label>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputNombre">Nombre:</label>
 				
-				            <div class="controls" ng-show="modoEditable">
+				            <div class="col-sm-10" ng-show="modoEditable">
 				            	<input type="text" data-ng-model="registro.nombre" class="form-control" id="title" placeholder="Nombre Portal" required title="Obligatorio" />
 				            </div>
-				            <div class="controls" ng-show="!modoEditable">
+				            <div class="col-sm-10" ng-show="!modoEditable">
 				            	{{ registro.nombre }}
 				            </div>
 				        </div>
-				        <div class="control-group">
-				            <label class="control-label" for="inputDescripcion">Descripcion:</label>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputDescripcion">Descripcion:</label>
 				
-				            <div class="controls" ng-show="modoEditable">
+				            <div class="col-sm-10" ng-show="modoEditable">
 				            	<input type="text" data-ng-model="registro.descripcion" class="form-control" id="title" placeholder="Descripcion Portal" required title="Obligatorio" />
 				            </div>
-				            <div class="controls" ng-show="!modoEditable">
+				            <div class="col-sm-10" ng-show="!modoEditable">
 				            	{{ registro.descripcion }}
 				            </div>
 				        </div>
-				        <div class="control-group">
-				            <label class="control-label" for="inputUrl">URL:</label>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label" for="inputUrl">URL:</label>
 				
-				            <div class="controls" ng-show="modoEditable">
+				            <div class="col-sm-10" ng-show="modoEditable">
 				            	<input type="text" data-ng-model="registro.url" class="form-control" id="title" placeholder="Url Portal" required title="Obligatorio" />
 				            </div>
-				            <div class="controls" ng-show="!modoEditable">
+				            <div class="col-sm-10" ng-show="!modoEditable">
 				            	{{ registro.url }}
 				            </div>
 				        </div>
-				        <div class="control-group">
-				            <div class="controls">
+				        <div class="form-group">
+				            <div class="col-sm-offset-2 col-sm-10">
 				                <input value="Cancelar" data-ng-click="clear()" type="button" class="btn btn-small" data-dismiss="modal"/>
 			                	<input value="Guardar" data-ng-click="save()" type="submit" class="btn btn-small btn-primary" ng-show="modoEditable"/>
 			                	<!-- input value="Editar" data-ng-click="updateForm({id:registro.id})" type="button" class="btn btn-small btn-primary" ng-show="!modoEditable"/ -->

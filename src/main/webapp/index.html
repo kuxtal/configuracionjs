@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="webjars/bootstrap/3.3.5/css/bootstrap.css" type="text/css" />
 </head>
 <body ng-cloak>
-	<div ng-controller="menu_ctrl" >
+	<div ng-controller="conf_menu_ctrl" >
 		<DIV ng-show="portalSeleccionado()">
 			<UL class="menu" >
 				<LI ng-repeat="modulo in modulos | orderBy:'id'">
@@ -71,11 +71,13 @@
 	<script src="portales/configuracion/administracion/modulo/controller.js"></script>
 	<script src="portales/configuracion/administracion/parametro/controller.js"></script>
 	<script src="portales/configuracion/administracion/servicio/controller.js"></script>
+	<script src="portales/configuracion/administracion/menu/controller.js"></script>
 	
 	<!-- AngularJS Services =================================================== -->
 	<script src="portales/configuracion/administracion/portal/service.js"></script>
 	<script src="portales/configuracion/administracion/modulo/service.js"></script>
 	<script src="portales/configuracion/administracion/parametro/service.js"></script>
-	<script src="portales/configuracion/administracion/servicio/service.js"></script>	
+	<script src="portales/configuracion/administracion/servicio/service.js"></script>
+	<script src="portales/configuracion/administracion/menu/service.js"></script>
 </body>
 </html>

@@ -19,7 +19,7 @@ app.controller('inicio_ctrl', function ($scope) {
 	$scope.nombre = "Javier";
 });
 
-app.controller('menu_ctrl', function ($scope,  MenuFactory, PortalService, ServiciosGlobales, $location) {
+app.controller('conf_menu_ctrl', function ($scope,  MenuFactory, PortalService, ServiciosGlobales, $location) {
 	$scope.portal = false;
 	$scope.portales = PortalService.query();
 	

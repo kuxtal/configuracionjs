@@ -91,4 +91,12 @@ app.controller('modulo_ctrl',
         };
         
         $scope.loadAll();
+        
+        // Funciones, Atributos Adicionales
+        $scope.listaMenuOpciones = [];
+        
+        $scope.showMenu = function(){
+        	$scope.listaMenuOpciones = ModuloService.buscaAdicionales({id : $scope.registro.id, adicional : 'menuopciones'});
+        	$("#modalMenuForm").modal('show');
+        }
 });
