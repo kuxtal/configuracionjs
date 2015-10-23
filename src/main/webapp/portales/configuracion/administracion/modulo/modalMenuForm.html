@@ -24,12 +24,47 @@
 				            <td><a ng-click="agregarMenuOpcion()" class="btn btn-small btn-primary"><i class="glyphicon glyphicon-plus"></i></a></td>
 				            <td style="width:20px;">&nbsp;</td>
 				        </TR>
-				        <tr ng-repeat="menuOpcion in listaMenuOpciones">
+				        <tr ng-repeat-start="menuOpcion in listaMenuOpciones">
 				            <td>{{ menuOpcion.nombre }}</td>
 				            <td>{{ menuOpcion.texto }}</td>
 				            <td>{{ menuOpcion.url }}</td>
 				            <td>{{ menuOpcion.orden }}</td>
-				            <td><a ng-click="eliminarmenuOpcion({id:menuOpcion.id})" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-minus"></i></a></td>
+				            <td><a ng-click="eliminarMenuOpcion({id:menuOpcion.id})" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-minus"></i></a></td>
+				        </tr>
+				        <tr ng-repeat-end>
+				            <td colspan="5">
+				            	<table class="table table-striped table-condensed">
+				            		<thead>
+				            			<tr>
+				            				<th style="width:40px;">&nbsp;</th>
+								            <th style="min-width: 80px;">Nombre</th>
+								            <th style="min-width: 80px;">Texto Menu</th>
+								            <th style="min-width: 80px;">Url</th>
+								            <th style="min-width: 80px;">Orden</th>
+								            <th style="width:20px;">&nbsp;</th>
+								        </tr>
+				            		</thead>
+				            		<tbody>
+				            			<TR>
+				            				<td>&nbsp;</td>
+								            <td><input type="text" data-ng-model="nvoSubMenuOpcion.nombre" class="form-control" id="nombre" placeholder="Nombre" required title="Obligatorio" /></td>
+								            <td><input type="text" data-ng-model="nvoSubMenuOpcion.texto" class="form-control" id="descripcion" placeholder="Descripcion" required title="Obligatorio" /></td>
+								            <td><input type="text" data-ng-model="nvoSubMenuOpcion.url" class="form-control" id="url" placeholder="Url" required title="Obligatorio" /></td>
+								            <td><input type="text" data-ng-model="nvoSubMenuOpcion.orden" class="form-control" id="url" placeholder="Orden" required title="Obligatorio" /></td>
+								            <td><a ng-click="agregarSubMenuOpcion(menuOpcion)" class="btn btn-small btn-primary"><i class="glyphicon glyphicon-plus"></i></a></td>
+								            <td style="width:20px;">&nbsp;</td>
+								        </TR>
+				            			<tr ng-repeat="menuSubOpcion in menuOpcion.listaMenuOpciones">
+				            				<td>&nbsp;</td>
+				            				<td>{{ menuSubOpcion.nombre }}</td>
+								            <td>{{ menuSubOpcion.texto }}</td>
+								            <td>{{ menuSubOpcion.url }}</td>
+								            <td>{{ menuSubOpcion.orden }}</td>
+								            <td><a ng-click="eliminarSubMenuOpcion({id:menuSubOpcion.id})" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-minus"></i></a></td>
+				            			</tr>
+				            		</tbody>
+				            	</table>
+				            </td>
 				        </tr>
 				    </tbody>
 				</table>
