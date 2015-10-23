@@ -1,7 +1,7 @@
 'use strict';
  
 app.controller('modulo_ctrl', 
-	function ($scope, ModuloService) {
+	function ($scope, ModuloService, MenuService) {
 		$scope.tituloBase	= 'Modulos';
 		$scope.tituloSingular= 'Modulo';
 		$scope.lista 		= [];
@@ -93,10 +93,63 @@ app.controller('modulo_ctrl',
         $scope.loadAll();
         
         // Funciones, Atributos Adicionales
-        $scope.listaMenuOpciones = [];
+        $scope.listaMenuOpciones 	= [];
+        $scope.nvoMenuOpcion		= {id:null, nombre:null, texto:null, url:null, orden:null};
+        $scope.nvoSubMenuOpcion		= {id:null, nombre:null, texto:null, url:null, orden:null};
         
         $scope.showMenu = function(){
-        	$scope.listaMenuOpciones = ModuloService.buscaAdicionales({id : $scope.registro.id, adicional : 'menuopciones'});
+        	$scope.listaMenuOpciones = ModuloService.buscaAdicionales({id : $scope.registro.id, adicional : 'menuopciones'}, function(){
+        		$.each($scope.listaMenuOpciones, function(index, valor){
+            		valor.listaMenuOpciones = MenuService.buscaAdicionales({id : valor.id, adicional : 'menuopciones'});
+            	});
+        	});
+
         	$("#modalMenuForm").modal('show');
+        }
+        
+        $scope.agregarMenuOpcion = function(){
+        	$scope.nvoMenuOpcion.modulo = $scope.registro;
+        	
+        	MenuService.save($scope.nvoMenuOpcion, function(){
+        		$scope.nvoMenuOpcion	= {id:null, nombre:null, texto:null, url:null, orden:null};
+        		$scope.listaMenuOpciones = ModuloService.buscaAdicionales({id : $scope.registro.id, adicional : 'menuopciones'}, function(){
+            		$.each($scope.listaMenuOpciones, function(index, valor){
+                		valor.listaMenuOpciones = MenuService.buscaAdicionales({id : valor.id, adicional : 'menuopciones'});
+                	});
+            	});
+        	});
+        }
+        
+        $scope.eliminarMenuOpcion = function(objeto){
+        	MenuService.delete({id: objeto.id}, function () {
+        		$scope.listaMenuOpciones = ModuloService.buscaAdicionales({id : $scope.registro.id, adicional : 'menuopciones'}, function(){
+            		$.each($scope.listaMenuOpciones, function(index, valor){
+                		valor.listaMenuOpciones = MenuService.buscaAdicionales({id : valor.id, adicional : 'menuopciones'});
+                	});
+            	});
+        	});
+        }
+        
+        $scope.agregarSubMenuOpcion = function(menuOpcion){
+        	$scope.nvoSubMenuOpcion.opcionPadre = menuOpcion;
+
+            MenuService.save($scope.nvoSubMenuOpcion, function(){
+                $scope.nvoSubMenuOpcion  = {id:null, nombre:null, texto:null, url:null, orden:null};
+                $scope.listaMenuOpciones = ModuloService.buscaAdicionales({id : $scope.registro.id, adicional : 'menuopciones'}, function(){
+                    $.each($scope.listaMenuOpciones, function(index, valor){
+                        valor.listaMenuOpciones = MenuService.buscaAdicionales({id : valor.id, adicional : 'menuopciones'});
+                    });
+                });
+            });
+        }
+        
+        $scope.eliminarSubMenuOpcion = function(objeto){
+        	MenuService.delete({id: objeto.id}, function () {
+                $scope.listaMenuOpciones = ModuloService.buscaAdicionales({id : $scope.registro.id, adicional : 'menuopciones'}, function(){
+                    $.each($scope.listaMenuOpciones, function(index, valor){
+                        valor.listaMenuOpciones = MenuService.buscaAdicionales({id : valor.id, adicional : 'menuopciones'});
+                    });
+                });
+            });
         }
 });
