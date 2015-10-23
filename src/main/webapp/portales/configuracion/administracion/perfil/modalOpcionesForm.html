@@ -1,0 +1,42 @@
+<div class="modal fade" id="modalOpcionesForm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+ 		<div class="modal-content">
+	 		<div class="modal-header">
+	 			<h4 class="modal-title" id="myModalLabel">{{ tituloModal }}</h4>
+	 		</div>
+	 		<div class="modal-body">
+	 			<table class="table table-striped table-condensed">
+					<thead>
+				        <tr>
+				            <th style="min-width: 80px;">Nombre</th>
+				            <th style="min-width: 80px;">Texto Menu</th>
+				            <th style="min-width: 80px;">Url</th>
+				            <th style="width:20px;">&nbsp;</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr ng-repeat="opcion in listaOpciones">
+				            <td>{{ opcion.nombre }}</td>
+				            <td>{{ opcion.texto }}</td>
+				            <td>{{ opcion.url }}</td>
+				            <td><toggle-switch
+								    ng-model="opcion.disponible"
+								    on-label="SI"
+								    off-label="NO">
+								<toggle-switch>
+							</td>
+				        </tr>
+				    </tbody>
+				</table>
+	 		</div>
+	 		<div class="modal-footer">
+	 			<div class="control-group">
+		            <div class="controls">
+		            	<input value="Guardar" data-ng-click="guardarOpciones()" type="submit" class="btn btn-primary btn-sm"/>
+		                <input value="Cerrar" type="button" class="btn btn-small" data-dismiss="modal"/>
+		            </div>
+		        </div>
+	 		</div>
+	 	</div>
+	 </div>
+</div>
