@@ -2,8 +2,8 @@
 
 app.controller('menu_ctrl', 
 	function ($scope, MenuService) {
-		$scope.tituloBase	= 'Parametros';
-		$scope.tituloSingular= 'Parametro';
+		$scope.tituloBase	= 'Menu';
+		$scope.tituloSingular= 'Menu';
 		$scope.lista		= [];
 		$scope.registro		= null;
 		
