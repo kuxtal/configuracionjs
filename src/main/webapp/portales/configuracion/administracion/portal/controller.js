@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('portal_ctrl', 
-	function ($scope, PortalService, ParametroService, ModuloService) {
+	function ($scope, PortalService, ParametroService, ModuloService, PerfilService) {
 		$scope.tituloBase	= 'Portales';
 		$scope.tituloSingular= 'Portal';
 		$scope.lista 		= [];
@@ -9,10 +9,6 @@ app.controller('portal_ctrl',
 		
 		$scope.modoEditable	= false;
 		$scope.tituloModal	= '';
-		
-		// Adicionales
-		$scope.nvoparametro	= {grupo:null, nombre: null, descripcion: null, id: null};
-		$scope.nvoModulo	= {url:null, nombre: null, descripcion: null, id: null};
 		
 		$scope.loadAll = function() {
 			PortalService.query(function(result) {
@@ -90,18 +86,26 @@ app.controller('portal_ctrl',
         	$("#modalForm").modal('hide');
         };
         
+        $scope.loadAll();
+
+        // Atributos y Funciones Adicionales
+        $scope.listaParametros= [];
+        $scope.listaModulos = [];
+        $scope.listaPerfiles= [];
+        $scope.nvoparametro = {grupo:null, nombre: null, descripcion: null, id: null};
+        $scope.nvoModulo    = {url:null, nombre: null, descripcion: null, id: null};
+        $scope.nvoPerfil    = {id: null, nombre: null, descripcion: null};
+
         $scope.showParametros = function(){
-        	$scope.listaParametros = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'parametros'});
-        	$("#modalParametrosForm").modal('show');
+            $scope.listaParametros = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'parametros'});
+            $("#modalParametrosForm").modal('show');
         }
         
         $scope.showModulos = function(){
-        	$scope.listaModulos = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'modulos'});
-        	$("#modalModulosForm").modal('show');
-        	$("#listadoOpciones").hide();
+            $scope.listaModulos = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'modulos'});
+            $("#modalModulosForm").modal('show');
+            $("#listadoOpciones").hide();
         }
-        
-        $scope.loadAll();
         
         $scope.agregarParametro = function(){
         	$scope.nvoparametro.portal = $scope.registro;
@@ -137,4 +141,24 @@ app.controller('portal_ctrl',
         $scope.showMenuOpciones = function(){
         	$("#listadoOpciones").show();
         }
+
+        $scope.showPerfiles = function(){
+            $scope.listaPerfiles = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'perfiles'});
+            $("#modalPerfilesForm").modal('show');
+        }
+
+        $scope.agregarPerfil = function(){
+            $scope.nvoPerfil.portal = $scope.registro;
+            
+            PerfilService.save($scope.nvoPerfil, function(){
+                $scope.nvoPerfil    = {id: null, nombre: null, descripcion: null};
+                $scope.listaPerfiles = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'perfiles'});
+            });
+        }
+        
+        $scope.eliminarPerfil = function (objeto) {
+            PerfilService.delete({id: objeto.id}, function () {
+                $scope.listaPerfiles = PortalService.buscaAdicionales({id : $scope.registro.id, adicional : 'perfiles'});
+            });
+        };
 });
